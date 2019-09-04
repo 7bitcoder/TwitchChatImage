@@ -1,3 +1,4 @@
+import sys
 from PIL import Image, ImageFilter
 
 
@@ -517,15 +518,25 @@ def getchar(T):
 
 
     pass##print(u'\u0123')
-treshold = 25
+if(len(sys.argv) < 4 or len(sys.argv) > 4):
+    print("wrong number of arguments ")
+    exit(-1);
+imageFile = sys.argv[3]
+treshold = int(sys.argv[2])
+binearization = bool(sys.argv[1])
 def bin(pixel):
     #print(pixel)
-    #return pixel
-    if(pixel[1] > treshold and pixel[2] > treshold and pixel[0] > treshold):
-        return 1
+    if(not binearization):
+        return pixel
     else:
-        return 0
-im = Image.open("input20.png")
+        if(pixel[1] > treshold and pixel[2] > treshold and pixel[0] > treshold):
+            return 1
+        else:
+            return 0
+
+
+im = Image.open(imageFile)
+file = open("image.txt", "w",encoding="utf-8")
 base = 33
 width = base*2 + base-1
 heigh =  int((width*im.height)/im.width)
@@ -534,7 +545,8 @@ im = im.resize((width,heigh))
 im = im.convert('RGB')
 
 #Applying a filter to the image
-#im = im.filter(ImageFilter.FIND_EDGES)
+if(not binearization):
+    im = im.filter(ImageFilter.FIND_EDGES)
 dat = u''
 gaprows = 6;
 gapcols = 3
@@ -552,6 +564,7 @@ for rows in range(heigh):
         pixelr42 = bin(im.getpixel((col*gapcols + 1, rows*gaprows+3)))
         char = getchar((pixelr11, pixelr12,pixelr21,pixelr22,pixelr31,pixelr32,pixelr41,pixelr42))
         dat = dat + char
-    print(dat)
+    file.write(dat+'\n')
     dat = u''
 im.show()
+file.close()
