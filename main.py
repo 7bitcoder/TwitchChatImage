@@ -518,22 +518,28 @@ def getchar(T):
 
 
     pass##print(u'\u0123')
-if(len(sys.argv) < 4 or len(sys.argv) > 4):
+if(len(sys.argv) < 5 or len(sys.argv) > 5):
     print("wrong number of arguments ")
     exit(-1);
-imageFile = sys.argv[3]
-treshold = int(sys.argv[2])
-binearization = bool(sys.argv[1])
+imageFile = str(sys.argv[3])
+treshold = int(sys.argv[4])
+reverse = bool(int(sys.argv[2]))
+binearization = bool(int(sys.argv[1]))
+print(str(imageFile)+ " " + str(treshold)+ " " + str(not binearization) + " " + sys.argv[1])
 def bin(pixel):
     #print(pixel)
+    retval = 1
     if(not binearization):
         return pixel
     else:
         if(pixel[1] > treshold and pixel[2] > treshold and pixel[0] > treshold):
-            return 1
+            retval = 1
         else:
-            return 0
-
+            retval = 0
+    if(reverse):
+        return retval
+    else:
+        return not retval
 
 im = Image.open(imageFile)
 file = open("image.txt", "w",encoding="utf-8")
@@ -566,5 +572,4 @@ for rows in range(heigh):
         dat = dat + char
     file.write(dat+'\n')
     dat = u''
-im.show()
 file.close()
