@@ -3,7 +3,7 @@
   * first:   1 - use binearization 0 - use egde detection filter
   * second:  (affecting only binearization) 1 - reverse binearization 0 - donn't reverse
   * third:   image filename
-  * fourth:  binarization threshold range 0-255
+  * fourth:  binarization threshold range 0-255 <br />
   eg: python main.py 1 1 pepe.jpg 128 
 # Examples
  <table style="width:100%">
